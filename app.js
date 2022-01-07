@@ -1,5 +1,6 @@
 //jshint esversion:6
 
+require('dotenv').config()  // for env variable to keep some secret stuff
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
@@ -26,7 +27,9 @@ var credentialSchema = new mongoose.Schema({
      }
 });
 
-credentialSchema.plugin(encrypt, {secret: "somesecretkey", encryptedFields: ["password"] });
+//console.log(process.env.SECRET); // proveide secret key that store inside in env variable
+
+credentialSchema.plugin(encrypt, {secret:process.env.SECRET, encryptedFields: ["password"] });
  
 
 let Credential =new mongoose.model("Credential",credentialSchema);
